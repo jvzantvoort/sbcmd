@@ -1,9 +1,9 @@
 #!/bin/bash
 #===============================================================================
 #
-#         FILE:  sphinx_build
+#         FILE:  mkarchive
 #
-#        USAGE:  sphinx_build
+#        USAGE:  mkarchive
 #
 #  DESCRIPTION:  $description
 #
@@ -38,10 +38,9 @@
 declare -r CONST_SCRIPTPATH="$(readlink -f $0)"
 declare -r CONST_SCRIPTNAME="$(basename $CONST_SCRIPTPATH .sh)"
 declare -r CONST_SCRIPTDIR="$(dirname $CONST_SCRIPTPATH)"
-declare -r CONST_DOCTREE="/output/tmp/doctrees"
-declare -r CONST_OUTPUTBASEDIR="/output"
-declare -r CONST_LOGFILE="${CONST_OUTPUTBASEDIR}/logging.txt"
+declare -r CONST_CODEBASEDIR="/code"
 
+# logging functions {{{
 function logging()
 {
   local priority="$1"; shift
@@ -72,37 +71,27 @@ function script_exit()
   exit $RETV
 }
 
-function isabs()
-{
-  local path=$1; shift
-  echo "$path" | grep -q "^/"
-  RETV=$?
-  [[ "$RETV" = "0" ]] && return 0 || return 1
-}
+# }}}
 
 #------------------------------------------------------------------------------#
 #                                    Main                                      #
 #------------------------------------------------------------------------------#
+
 logging_info "start"
 
 SW_SRCDIR=$1; shift
 SW_DSTDIR=$1; shift
+SW_UID=$1; shift
+SW_GID=$1; shift
 
-[[ -z "${SW_SRCDIR}" ]] && SW_SRCDIR="sphinxdoc"
-[[ -z "${SW_DSTDIR}" ]] && SW_DSTDIR="html"
-isabs "${SW_DSTDIR}"    || SW_DSTDIR="${CONST_OUTPUTBASEDIR}/${SW_DSTDIR}"
+pushd "${SW_DSTDIR}"
+tar -z -c -f "${CONST_CODEBASEDIR}/build.tar.gz" .
+popd
 
-sphinx-build -E \
-  -b html \
-  -d ${CONST_DOCTREE} \
-  -N \
-  -q \
-  $SW_SRCDIR $SW_DSTDIR 2>&1 | tee -a "${CONST_LOGFILE}"
-RETV=$?
-
-[[ "$RETV" = "0" ]] || script_exit "sphinx-build failed"
+chown "${SW_UID}:${SW_GID}" "${CONST_CODEBASEDIR}/build.tar.gz"
 
 script_exit "end"
 #------------------------------------------------------------------------------#
 #                                  The End                                     #
 #------------------------------------------------------------------------------#
+# vim: foldmethod=marker

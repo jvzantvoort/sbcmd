@@ -143,6 +143,8 @@ logging_info "start"
 SW_ACTION=$1; shift
 SW_SRCDIR=""
 SW_DSTDIR=""
+SW_UID="0"
+SW_GID="0"
 
 # help
 # --------------------------------------
@@ -169,12 +171,15 @@ do
   case $arg_item in
     srcdir=*) SW_SRCDIR="${arg_item#*=}";        shift;;
     dstdir=*) SW_DSTDIR="${arg_item#*=}";        shift;;
+    uid=*)    SW_UID="${arg_item#*=}";           shift;;
+    gid=*)    SW_GID="${arg_item#*=}";           shift;;
     *)        ARGS=("${ARGS[@]}" "${arg_item}"); shift;;
   esac
 done
 
 # make relative path absolute
 # --------------------------------------
+isabs "${SW_SRCDIR}" || SW_SRCDIR="${CONST_CODEBASEDIR}/${SW_SRCDIR}"
 isabs "${SW_DSTDIR}" || SW_DSTDIR="${CONST_OUTPUTBASEDIR}/${SW_DSTDIR}"
 
 # COMMAND
@@ -185,6 +190,8 @@ isabs "${SW_DSTDIR}" || SW_DSTDIR="${CONST_OUTPUTBASEDIR}/${SW_DSTDIR}"
 $COMMAND "${SW_SRCDIR}" "${SW_DSTDIR}" $@
 
 [[ -e "/code/postprocessor" ]] && /code/postprocessor "${SW_SRCDIR}" "${SW_DSTDIR}" $@
+
+/code/mkarchive "${SW_SRCDIR}" "${SW_DSTDIR}" "${SW_UID}" "${SW_GID}" $@
 
 script_exit "end"
 #------------------------------------------------------------------------------#

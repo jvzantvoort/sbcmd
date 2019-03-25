@@ -9,7 +9,7 @@ check-manifest==0.37
 click==6.7
 commonmark==0.8.1
 demjson==2.2.4
-docutils==0.12
+docutils>=0.13
 future==0.16.0
 imagesize==0.7.1
 invoke==1.2.0
