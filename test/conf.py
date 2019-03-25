@@ -36,7 +36,7 @@ exclude_patterns = []
 pygments_style = 'sphinx'
 todo_include_todos = True
 html_title = "van Zantvoort"
-html_static_path = ['_static']
+html_static_path = ['book_static']
 html_extra_path = ['book_extra']
 html_sidebars = {
     '**': [
