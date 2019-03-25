@@ -14,7 +14,7 @@ Use
     gid=$(id -g)
 ```
 
-Docker options:
+### Docker options
 
 ```
 --rm
@@ -33,6 +33,18 @@ options use this as a starting point.
 Add a tmpfs mount to the image mounted under `/output`. This is used
 to write the initial output.
 
+### entry point options
+
+The first option is the "action" which can be "help", "sphinx" or a
+path to a local script.
+
+Subsequent options are:
+
+* `srcdir=<path>`, path to the source directory
+* `dstdir=<path>`, path to the output directory
+* `uid=`, nummeric uid of the output user (ussually `id -u`)
+* `gid=`, nummeric gid of the output user (ussually `id -g`)
+
 
 Included themes
 ---------------
@@ -45,3 +57,7 @@ Included themes
 * sphinx-typlog-theme (0.7.2)
 * zerovm-sphinx-theme (1.1)
 
+Note
+----
+
+This is a work in progress.
