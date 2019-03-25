@@ -41,6 +41,7 @@ declare -r CONST_SCRIPTDIR="$(dirname $CONST_SCRIPTPATH)"
 declare -r CONST_DOCTREE="/output/tmp/doctrees"
 declare -r CONST_OUTPUTBASEDIR="/output"
 declare -r CONST_CODEBASEDIR="/code"
+declare -r CONST_SBCMDDIR="/usr/sbcmd/bin"
 declare -r CONST_LOGFILE="${CONST_OUTPUTBASEDIR}/logging.txt"
 
 # logging functions {{{
@@ -130,6 +131,18 @@ function find_builder()
     return 0
   fi
 
+  if [ -x "${CONST_SBCMDDIR}/${SW_ACTION}" ]
+  then
+    echo "${CONST_SBCMDDIR}/${SW_ACTION}"
+    return 0
+  fi
+
+  if [ -x "${CONST_SBCMDDIR}/${SW_ACTION}_build" ]
+  then
+    echo "${CONST_SBCMDDIR}/${SW_ACTION}_build"
+    return 0
+  fi
+
   print_help "E_NOSUCHFILE"
 }
 # }}}
@@ -191,7 +204,7 @@ $COMMAND "${SW_SRCDIR}" "${SW_DSTDIR}" $@
 
 [[ -e "/code/postprocessor" ]] && /code/postprocessor "${SW_SRCDIR}" "${SW_DSTDIR}" $@
 
-/code/mkarchive "${SW_SRCDIR}" "${SW_DSTDIR}" "${SW_UID}" "${SW_GID}" $@
+${CONST_SBCMDDIR}/mkarchive "${SW_SRCDIR}" "${SW_DSTDIR}" "${SW_UID}" "${SW_GID}" $@
 
 script_exit "end"
 #------------------------------------------------------------------------------#

@@ -1,5 +1,5 @@
 
-NAME ?= "jvzantvoort/sbcmd:1"
+NAME ?= "jvzantvoort/sbcmd:2"
 UID  ?= $(shell id -u)
 GID  ?= $(shell id -g)
 

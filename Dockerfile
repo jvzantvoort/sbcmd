@@ -4,8 +4,13 @@ LABEL \
   maintainer="john@vanzantvoort.org" \
   description="site builder command image"
 
+RUN mkdir -p /usr/sbcmd/bin
+
 # add the python requirements file
 ADD requirements.txt /tmp/requirements.txt
+ADD entrypoint.sh /usr/sbcmd/bin/entrypoint.sh
+ADD mkarchive /usr/sbcmd/bin/mkarchive
+ADD sphinx_build /usr/sbcmd/bin/sphinx_build
 
 # install required debian packages
 # Run pip to install the requirements
@@ -16,4 +21,4 @@ RUN apt-get update && \
 WORKDIR /code
 VOLUME ["/output"]
 
-ENTRYPOINT ["/code/entrypoint.sh"]
+ENTRYPOINT ["/usr/sbcmd/bin/entrypoint.sh"]
