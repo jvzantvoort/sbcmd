@@ -10,9 +10,29 @@ Use
 
 ```bash
   docker run --rm -v $PWD:/code --mount type=tmpfs,destination=/output \
-    -i "jvzantvoort/sbcmd:1" sphinx srcdir=test uid=$(id -u) \
+    "jvzantvoort/sbcmd:1" sphinx srcdir=test uid=$(id -u) \
     gid=$(id -g)
 ```
+
+Docker options:
+
+```
+--rm
+```
+Automatically remove the container when it exits.
+
+```
+-v $PWD:/code
+```
+Mount the directory `$PWD` in the image under `/code` the other
+options use this as a starting point.
+
+```
+--mount type=tmpfs,destination=/output
+```
+Add a tmpfs mount to the image mounted under `/output`. This is used
+to write the initial output.
+
 
 Included themes
 ---------------
@@ -24,3 +44,4 @@ Included themes
 * sphinx-rtd-theme (0.4.3)
 * sphinx-typlog-theme (0.7.2)
 * zerovm-sphinx-theme (1.1)
+
