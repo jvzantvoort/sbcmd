@@ -1,4 +1,4 @@
-FROM python:3.6
+FROM jvzantvoort/python3:latest
 
 LABEL \
   maintainer="john@vanzantvoort.org" \
@@ -21,4 +21,6 @@ RUN apt-get update && \
 WORKDIR /code
 VOLUME ["/output"]
 
+
+USER docker:docker
 ENTRYPOINT ["/usr/sbcmd/bin/entrypoint.sh"]
