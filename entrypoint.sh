@@ -44,6 +44,8 @@ declare -r CONST_CODEBASEDIR="/code"
 declare -r CONST_SBCMDDIR="/usr/sbcmd/bin"
 declare -r CONST_LOGFILE="${CONST_OUTPUTBASEDIR}/logging.txt"
 
+eval $( fixuid )
+
 # logging functions {{{
 function logging()
 {
@@ -158,6 +160,7 @@ SW_SRCDIR=""
 SW_DSTDIR=""
 SW_UID="0"
 SW_GID="0"
+SW_ARCH="no"
 
 # help
 # --------------------------------------
@@ -184,6 +187,7 @@ do
   case $arg_item in
     srcdir=*) SW_SRCDIR="${arg_item#*=}";        shift;;
     dstdir=*) SW_DSTDIR="${arg_item#*=}";        shift;;
+    archive=*) SW_ARCH="${arg_item#*=}";        shift;;
     uid=*)    SW_UID="${arg_item#*=}";           shift;;
     gid=*)    SW_GID="${arg_item#*=}";           shift;;
     *)        ARGS=("${ARGS[@]}" "${arg_item}"); shift;;
