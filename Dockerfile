@@ -1,4 +1,4 @@
-FROM jvzantvoort/python3:latest
+FROM python:3.13.0a5-bullseye
 
 LABEL \
   maintainer="john@vanzantvoort.org" \
@@ -12,11 +12,17 @@ ADD entrypoint.sh /usr/sbcmd/bin/entrypoint.sh
 ADD mkarchive /usr/sbcmd/bin/mkarchive
 ADD sphinx_build /usr/sbcmd/bin/sphinx_build
 
-# install required debian packages and
-# run pip to install the requirements
-RUN apt-get update && apt-get install -y libldap2-dev libsasl2-dev rsync && \
-pip install -r /tmp/requirements.txt && \
-sed -i 's,sphinx.application,sphinx.errors,g' /usr/local/lib/python3.6/site-packages/sphinxcontrib/googleanalytics.py
+# runtime dependencies
+RUN set -eux; \
+	apt-get update; \
+	apt-get install -y --no-install-recommends \
+		libldap2-dev \
+		libsasl2-dev \
+		rsync \
+	; \
+	rm -rf /var/lib/apt/lists/*
+
+RUN pip install -U pip && pip install -r /tmp/requirements.txt
 
 WORKDIR /code
 VOLUME ["/output"]

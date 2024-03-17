@@ -1,48 +1,11 @@
 #!/bin/bash
-#===============================================================================
-#
-#         FILE:  entrypoint.sh
-#
-#        USAGE:  entrypoint.sh
-#
-#  DESCRIPTION:  This script is called at the start of the image.
-#
-#      OPTIONS:  ---
-# REQUIREMENTS:  ---
-#         BUGS:  ---
-#        NOTES:  ---
-#       AUTHOR:  John van Zantvoort, John@------------.org
-#      COMPANY:  none
-#      CREATED:  18-Jul-2017
-#
-# Copyright (C) 2019 John van Zantvoort
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-#===============================================================================
-declare -r CONST_SCRIPTPATH="$(readlink -f $0)"
-declare -r CONST_SCRIPTNAME="$(basename $CONST_SCRIPTPATH .sh)"
-declare -r CONST_SCRIPTDIR="$(dirname $CONST_SCRIPTPATH)"
-declare -r CONST_DOCTREE="/output/tmp/doctrees"
-declare -r CONST_OUTPUTBASEDIR="/output"
-declare -r CONST_CODEBASEDIR="/code"
-declare -r CONST_SBCMDDIR="/usr/sbcmd/bin"
-declare -r CONST_LOGFILE="${CONST_OUTPUTBASEDIR}/logging.txt"
+CONST_SCRIPTPATH="$(readlink -f "$0")"
+CONST_SCRIPTNAME="$(basename "$CONST_SCRIPTPATH" .sh)"
+CONST_SCRIPTDIR="$(dirname "$CONST_SCRIPTPATH")"
+CONST_OUTPUTBASEDIR="/output"
+CONST_CODEBASEDIR="/code"
+CONST_SBCMDDIR="/usr/sbcmd/bin"
+CONST_LOGFILE="${CONST_OUTPUTBASEDIR}/logging.txt"
 
 eval $( fixuid )
 
@@ -160,7 +123,6 @@ SW_SRCDIR=""
 SW_DSTDIR=""
 SW_UID="0"
 SW_GID="0"
-SW_ARCH="no"
 
 # help
 # --------------------------------------
@@ -175,9 +137,9 @@ COMMAND=$(find_builder "${SW_ACTION}")
 # --------------------------------------
 case "${SW_ACTION}" in
   sphinx) SW_SRCDIR="sphinxdoc"
-          SW_DSTDIR="html";;
+    SW_DSTDIR="html" ;;
   ablog) SW_SRCDIR=""
-         SW_DSTDIR="website";;
+    SW_DSTDIR="website" ;;
 esac
 
 # extract certain arguments
@@ -185,12 +147,11 @@ esac
 for arg_item in "$@"
 do
   case $arg_item in
-    srcdir=*) SW_SRCDIR="${arg_item#*=}";        shift;;
-    dstdir=*) SW_DSTDIR="${arg_item#*=}";        shift;;
-    archive=*) SW_ARCH="${arg_item#*=}";        shift;;
-    uid=*)    SW_UID="${arg_item#*=}";           shift;;
-    gid=*)    SW_GID="${arg_item#*=}";           shift;;
-    *)        ARGS=("${ARGS[@]}" "${arg_item}"); shift;;
+    srcdir=*) SW_SRCDIR="${arg_item#*=}";        shift ;;
+    dstdir=*) SW_DSTDIR="${arg_item#*=}";        shift ;;
+    uid=*)    SW_UID="${arg_item#*=}";           shift ;;
+    gid=*)    SW_GID="${arg_item#*=}";           shift ;;
+    *)        ARGS=("${ARGS[@]}" "${arg_item}"); shift ;;
   esac
 done
 
