@@ -16,7 +16,7 @@ importlib-metadata==4.8.3
 Markdown==3.3.7
 natsort==8.2.0
 pilkit==3.0
-Pillow==10.2.0
+Pillow==10.3.0
 sigal==2.2
 typing_extensions==4.1.1
 zipp==3.6.0
