@@ -19,7 +19,7 @@ pilkit==3.0
 Pillow==10.3.0
 sigal==2.2
 typing_extensions==4.1.1
-zipp==3.6.0
+zipp==3.19.1
 asgiref==3.4.1
 Django==3.2.25
 django-extensions==3.2.3
