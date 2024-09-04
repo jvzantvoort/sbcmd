@@ -2,7 +2,7 @@ ansible
 ansible-core
 ansible-docgen
 cffi==1.15.1
-cryptography==42.0.4
+cryptography==43.0.1
 Jinja2==3.1.4
 MarkupSafe==2.0.1
 packaging==21.3
