@@ -16,7 +16,7 @@ click==8.1.7
 colorclass==2.2.2
 cryptography==43.0.1
 dill==0.3.9
-Django==5.1.4
+Django==5.1.7
 django-extensions==3.2.3
 django-unixdatetimefield==1.2.0
 docutils==0.20.1
