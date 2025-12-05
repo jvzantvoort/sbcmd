@@ -1,7 +1,7 @@
 ablog==0.11.11
 alabaster==0.7.16
 anarchy_sphinx==0.3.1
-ansible==10.4.0
+ansible==12.2.0
 ansible-core==2.17.7
 ansible-docgen==1.0.0
 asgiref==3.8.1
