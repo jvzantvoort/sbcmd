@@ -88,7 +88,7 @@ sqlparse==0.5.1
 tomli==2.0.2
 tomlkit==0.13.2
 typing_extensions==4.12.2
-urllib3==2.5.0
+urllib3==2.6.0
 watchdog==5.0.3
 wrapt==1.16.0
 zerovm-sphinx-theme==1.1
